@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Youtube_Keys
 // @namespace    YT
-// @version      1.01
+// @version      1.01b
 // @description  F2 to next video.
 // @author       FrozenVoid
 // @match        https://www.youtube.com/watch?v*
@@ -11,8 +11,8 @@
 (function() {
  'use strict';
     function evproc(ev){
-      if(ev.key=="F2")document.querySelector(
-          "a.ytd-compact-video-renderer").click();
+      if(ev.key=="F2"){var c=document.querySelector(
+          "a.ytd-compact-video-renderer");if(c)c.click();}
 
 
     }
