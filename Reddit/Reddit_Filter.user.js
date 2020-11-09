@@ -6,14 +6,14 @@
 // @include     https://old.reddit.com/r/*
 // @include     https://www.reddit.com/r/all/*
 // @include     https://old.reddit.com/r/all/*
-// @version     1.02
+// @version     1.03b
 // @grant       none
 // ==/UserScript==
 /* this script assumes Old Reddit interface not the JS-based one:
 IT WILL NOT WORK ON NEW REDDIT due lack of data- attributes in elements*/
 //tagged categories:: switch quickly by uncommenting lines.
-
-const DEBUG=true;//false //log each filter actions/debug info
+//1=true,0=false
+var DEBUG=true;//false //log each filter actions/debug info
 //const DEBUG=false //log each filter actions/debug info
 
 //var enable_on_rall_only=true;//use only on /r/all
@@ -24,7 +24,7 @@ var load_default_filters=true;//load default filters
 
 var blocknsfw=false;//block nsfw content
 //var blocknsfw=true;//block nsfw content
-var blockselfposts=false;//(self.subname)
+var blockselfposts=1;//(self.subname)
 //var blockselfposts=true;//(self.subname)
 
 var block_promoted=false;//promoted posts
@@ -40,8 +40,8 @@ function modeof(m){var pref='';
 switch(m){
 case 'word':pref='~';break;//word match
 case 'contains':pref='*';break;//text match
-case 'prefix':pref='^';break;
-case 'suffix':pref='$';break;
+case 'prefix':pref='^';break;//prefix
+case 'suffix':pref='$';break;//suffix
 default:;break;}
 return pref;}
 
@@ -49,32 +49,24 @@ function addtitles(){//fix reddit lack of 'data-title'
 var a=document.querySelectorAll('[data-subreddit]');
 for(var i=0;i<a.length;i++){
 var title=a[i].querySelector('a[data-event-action="title"]');
-if(!title)continue;
-a[i].setAttribute('data-title',title.innerHTML.toString());}}
+if(!title)continue; a[i].setAttribute('data-title',title.innerHTML.toString());}}
 
-
-function addcssitem(category,mode,item){
-if(DEBUG)csscounter++;
+function addcssitem(category,mode,item){if(DEBUG)csscounter++;
 dbg(`Adding item#${csscounter} : ${item} in:${category} mode: ${mode.toString()}`);
 return `,[data-${category}${mode}="${item}"]`;}
 
-function addarrays(obj,name){
-obj[name]=[];
-obj[name]['prefix']=[];//content prefix
-obj[name]['word']=[];//space separated words
-obj[name]['contains']=[];//text chunks
-obj[name]['suffix']=[];};// content suffix
+function addarrays(){const prefixmap=['prefix','word','contains','suffix'];
+for(var i=0;i<arguments.length;i++){words[arguments[i]]=[];
+for(var k=0;k<prefixmap.length;k++)words[arguments[i]][prefixmap[k]]=[];}}
+
 
 dbg("page load");
 
 
-var words=[],csscounter=0;//comma separated lists, comment out those you don't need
-addarrays(words,'domain');
-addarrays(words,'permalink');
-addarrays(words,'subreddit');
-addarrays(words,'author');
-addarrays(words,'url');
-addarrays(words,'title');
+var words=[],csscounter=0;
+//comma separated lists, comment out those you don't need
+addarrays('domain','permalink','subreddit','author','url','title')
+
 
 /*  prefix/suffix filter=filter names with prefix/suffix, 
 contains=match any text that contains it(used with title/permalink)
@@ -84,9 +76,10 @@ permalink is the shortened link title, which can be used for filtering content
 //format:  words[ subreddit,author,permalink,domain][prefix,suffix,word,contains][name-of-filter-list]=`name1,name2`
 //comment //out unused lists
 if(load_default_filters){
-words['domain']['word']['media_hosts']=`i.redd.it,v.redd.it,gfycat.com,i.imgur.com,imgur.com`;
+words['domain']['word']['media_hosts']=`i.redd.it,v.redd.it,gfycat.com,i.imgur.com,imgur.com,redgifs.com`;
 words['domain']['suffix']['reddit_internal']=`.redd.it`;
-words['domain']['word']['reddit_internal']=`reddit.com`;
+words['subreddit']['word']['word_games']=`AskOuija,IsTodayFridayThe13th`;
+
 
 dbg("default filters loaded");}
 //-------Write your filters here, example lists
@@ -105,10 +98,10 @@ dbg("filtering on non /r/all pages disabled")
 return `/* filters for non-/r/all content disabled in Reddit_Filter prefs*/`;}
 dbg("tag filters")
 addtitles();//fix lack of title css
-if(blocknsfw){res+=',[data-nsfw="true"]';}
-if(block_crossposts){res+=`,[data-num-crossposts]:not([data-num-crossposts="0"])`}
-if(block_promoted){res+=`,[data-promoted="true"]`;}
-if(blockselfposts){res+=`,.self[data-domain^="self."]`;}
+if(blocknsfw){res.push(',[data-nsfw="true"]');}
+if(block_crossposts){res.push(`,[data-num-crossposts]:not([data-num-crossposts="0"])`)}
+if(block_promoted){res.push(`,[data-promoted="true"]`);}
+if(blockselfposts){res.push(`,.self[data-domain^="self."]`);}
 for(var t in words){var typ=words[t],typname=t;//domain/permalink/author/subreddit
 for(var cat in typ){var c=typ[cat];var pref=modeof(cat);//prefix type $^~*
  for(var str in c){var wordlist=c[str].split(',');// filtered comma separated text chunks
