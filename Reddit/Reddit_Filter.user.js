@@ -2,11 +2,8 @@
 // @name        Reddit_Filter
 // @namespace   reddit_filters
 // @description Filter content on reddit by title,domain,user,subreddit
-// @include     https://www.reddit.com/r/*
-// @include     https://old.reddit.com/r/*
-// @include     https://www.reddit.com/r/all/*
-// @include     https://old.reddit.com/r/all/*
-// @version     1.03c
+// @include     https://*.reddit.com/*
+// @version     1.04
 // @grant       none
 // ==/UserScript==
 /* this script assumes Old Reddit interface not the JS-based one:
@@ -16,8 +13,10 @@ IT WILL NOT WORK ON NEW REDDIT due lack of data- attributes in elements*/
 var DEBUG=true;//false //log each filter actions/debug info
 //const DEBUG=false //log each filter actions/debug info
 
-//var enable_on_rall_only=true;//use only on /r/all
-var enable_on_rall_only=false;//use only on /r/all
+//var disable_on_specific_subreddits=true;//use only on /r/all
+var disable_on_specific_subreddits=false;//use outside /r/all
+var disable_on_frontpage=true;//don't use on frontpage,since user
+var disable_on_otherpages=true;//don't use on non-subreddit pages (without  /r/subname)
 
 var load_default_filters=true;//load default filters
 //var load_default_filters=false;//load default filters
@@ -32,6 +31,15 @@ var block_promoted=false;//promoted posts
 
 var block_crossposts=false;//crossposts.
 //var block_crossposts=true;//crossposts.
+
+
+//========================================================
+//========================================================
+var rpath=document.location.pathname;
+var onfrontpage=(rpath==="/");
+var onrall=(rpath==="/r/all/");
+var onsub=!onfrontpage && !onrall && (rpath.search(/\/r\//)!=-1);
+var onother=!onfrontpage && !onrall && !onsub;// non subreddit page
 
 
 function dbg(text){if(DEBUG){console.info(text)};}
@@ -60,9 +68,9 @@ for(var i=0;i<arguments.length;i++){words[arguments[i]]=[];
 for(var k=0;k<prefixmap.length;k++)words[arguments[i]][prefixmap[k]]=[];}}
 
 
-dbg("page load");
 
-
+//page loaded
+dbg(onfrontpage?"Loaded frontpage":(onrall?"Loaded /r/all":onsub?"Loaded Subreddit:"+rpath:"Other page load:"+rpath));
 var words=[],csscounter=0;
 //comma separated lists, comment out those you don't need
 addarrays('domain','permalink','subreddit','author','url','title')
@@ -93,17 +101,22 @@ words['author']['prefix']['user_filter1']=`username_begins_with_x`;
 
 //-----main
 function gencss(){ var res=[];res.push(`[category-name="cat-value"]`);
-if(enable_on_rall_only && document.location.href.search(".com/r/all/")==-1){
-dbg("filtering on non /r/all pages disabled")
-return `/* filters for non-/r/all content disabled in Reddit_Filter prefs*/`;}
+if((disable_on_specific_subreddits && onsub)||
+(disable_on_frontpage && onfrontpage)||
+(disable_on_otherpages && onother)){
+dbg("filtering disabled on;"+rpath);
+return `/* filters for url path: '${rpath}' content disabled in Reddit_Filter prefs*/`;}
 dbg("tag filters")
 addtitles();//fix lack of title css
 if(blocknsfw){res.push(',[data-nsfw="true"]');}
 if(block_crossposts){res.push(`,[data-num-crossposts]:not([data-num-crossposts="0"])`)}
 if(block_promoted){res.push(`,[data-promoted="true"]`);}
 if(blockselfposts){res.push(`,.self[data-domain^="self."]`);}
+dbg("main css loop")
 for(var t in words){var typ=words[t],typname=t;//domain/permalink/author/subreddit
+
 for(var cat in typ){var c=typ[cat];var pref=modeof(cat);//prefix type $^~*
+dbg("processing data-"+t+" mode:"+cat);
  for(var str in c){var wordlist=c[str].split(',');// filtered comma separated text chunks
 for(var i=0;i<wordlist.length;i++){if(!wordlist[i].length)continue;
 res.push(addcssitem(typname,pref,wordlist[i]));
