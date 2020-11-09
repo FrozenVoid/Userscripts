@@ -6,7 +6,7 @@
 // @include     https://old.reddit.com/r/*
 // @include     https://www.reddit.com/r/all/*
 // @include     https://old.reddit.com/r/all/*
-// @version     1.03b
+// @version     1.03c
 // @grant       none
 // ==/UserScript==
 /* this script assumes Old Reddit interface not the JS-based one:
@@ -24,7 +24,7 @@ var load_default_filters=true;//load default filters
 
 var blocknsfw=false;//block nsfw content
 //var blocknsfw=true;//block nsfw content
-var blockselfposts=1;//(self.subname)
+var blockselfposts=false;//(self.subname)
 //var blockselfposts=true;//(self.subname)
 
 var block_promoted=false;//promoted posts
@@ -51,8 +51,8 @@ for(var i=0;i<a.length;i++){
 var title=a[i].querySelector('a[data-event-action="title"]');
 if(!title)continue; a[i].setAttribute('data-title',title.innerHTML.toString());}}
 
-function addcssitem(category,mode,item){if(DEBUG)csscounter++;
-dbg(`Adding item#${csscounter} : ${item} in:${category} mode: ${mode.toString()}`);
+function addcssitem(category,mode,item){
+dbg(`Adding item#${csscounter++} : ${item} in:${category} mode: ${mode.toString()}`);
 return `,[data-${category}${mode}="${item}"]`;}
 
 function addarrays(){const prefixmap=['prefix','word','contains','suffix'];
@@ -112,6 +112,7 @@ res.push(`{display:none!important}`);
  dbg("Successfully added filters to CSS");
 return res.join("");}
 
+//--- add CSS to page---
 
 var csscontainer=document.createElement('style');
 csscontainer.id='redditcssfilter1';
