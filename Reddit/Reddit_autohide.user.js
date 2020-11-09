@@ -7,13 +7,13 @@
 // @grant       none
 // ==/UserScript==
 //1=true,0=false
-const DEBUG=true;//log debug info
-const log_only=false;//true->don't hide just log debug info
-const only_visible=true;//hide only visible articles
-const hide_interval=500;//milliseconds
-const auto_refresh=true;//reload if all articles hidden (only_visible=false)
-const auto_next=true;//load next page if all visible articles hidden.(only_visible=true)
-const keyname='F2'//key to use
+var DEBUG=true;//log debug info
+var log_only=false;//true->don't hide just log debug info
+var only_visible=true;//hide only visible articles
+var hide_interval=500;//milliseconds
+var auto_refresh=true;//reload if all articles hidden (only_visible=false)
+var auto_next=true;//load next page if all visible articles hidden.(only_visible=true)
+var keyname='F2'//key to use
 //================================
 
 var process_article_counter=0;
