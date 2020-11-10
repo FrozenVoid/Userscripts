@@ -3,7 +3,7 @@
 // @namespace   Reddit
 // @description Hide all articles with F2/shift-F2
 // @include     https://*.reddit.com/*
-// @version     1.05b
+// @version     1.05c
 // @grant       none
 // ==/UserScript==
 //1=true,0=false
@@ -14,12 +14,15 @@ var hide_interval=500;//milliseconds
 var auto_refresh=true;//reload if all articles hidden (only_visible=false)
 var auto_next=true;//load next page if all visible articles hidden.(only_visible=true)
 var keyname='F2';//key to use, 
-var isshift=0;//track bypass only_visible Shift-F2; setting to 1 will ignore only_visible
+
+
+
 
 
 //================================
 
 var process_article_counter=0;
+var isshift=0;//track bypass 
 function dbg(text){if(DEBUG){console.info(text)};}
 function isHidden(el) {    return (el.offsetParent === null);}
 function hidepress(e){if(e.code!=keyname)return;
