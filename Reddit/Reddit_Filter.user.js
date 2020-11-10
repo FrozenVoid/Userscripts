@@ -3,19 +3,18 @@
 // @namespace   reddit_filters
 // @description Filter content on reddit by title,domain,user,subreddit
 // @include     https://*.reddit.com/*
-// @version     1.06b
+// @version     1.06c
 // @run-at    document-idle
 // @grant      unsafeWindow
 // ==/UserScript==
 /* this script assumes Old Reddit interface not the JS-based one:
 IT WILL NOT WORK ON NEW REDDIT due lack of data- attributes in elements*/
-//tagged categories:: switch quickly by uncommenting lines.
 var DEBUG=true;//false //log each filter actions/debug info
 var DEBUG2=0;//false log misc. processing
 
 //var disable_on_specific_subreddits=true;//use only on /r/all
-var disable_on_specific_subreddits=true;//use outside /r/all
-var disable_on_frontpage=true;//don't use on frontpage,since user
+var disable_on_specific_subreddits=true;//use outside /r/all e.g. r/AskReddit
+var disable_on_frontpage=true;//don't use on frontpage
 var disable_on_otherpages=true;//don't use on non-subreddit pages (without  /r/subname)
 
 var load_custom_window_filters=1;//load window-specific filters from other scripts.
@@ -112,7 +111,7 @@ if(!load_custom_window_filters)return css2;
 dbg2("loading custom filters");
 for(var z in customcssvar){
 var rcont=unsafeWindow[customcssvar[z]];
-if(!rcont){dbg("Cannot load custom filter container"+z);continue}
+if(!rcont){dbg("Cannot load custom filter container:"+rcont);continue}
 dbg2('loaded:'+rcont);
 var rcustomfilters = JSON.parse(rcont); 
 dbg2("gencss new filters");
@@ -120,13 +119,11 @@ css2+=gencss(rcustomfilters);
 dbg2("loaded custom filters");
 }  return css2;}
 
-//--- add CSS to page---
-function addcss_final(){
+
 var csscontainer=document.createElement('style');
 csscontainer.id='redditcssfilter1';
 csscontainer.innerHTML=customfilters()+gencss(words);
 document.body.appendChild(csscontainer);
 dbg2("idle, elements inserted:"+csscounter);
-dbg(document.getElementById('redditcssfilter1').innerHTML.toString())
-}
-addcss_final();
+dbg2(document.getElementById('redditcssfilter1').innerHTML.toString())
+
