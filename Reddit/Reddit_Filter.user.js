@@ -3,7 +3,7 @@
 // @namespace   reddit_filters
 // @description Filter content on reddit by title,domain,user,subreddit
 // @include     https://*.reddit.com/*
-// @version     1.06c
+// @version     1.06d
 // @run-at    document-idle
 // @grant      unsafeWindow
 // ==/UserScript==
@@ -27,7 +27,7 @@ var customcssvar=["reddit_csscustom_filt2"];//window variables which loads custo
 //========================================================
 var rpath=document.location.pathname;
 var onfrontpage=(rpath==="/");
-var onrall=(rpath==="/r/all/");
+var onrall=(rpath.search("/r/all/")!=-1);
 var onsub=!onfrontpage && !onrall && (rpath.search(/\/r\//)!=-1);
 var onother=!onfrontpage && !onrall && !onsub;// non subreddit page
 var words={},csscounter=0;
@@ -122,7 +122,7 @@ dbg2("loaded custom filters");
 
 var csscontainer=document.createElement('style');
 csscontainer.id='redditcssfilter1';
-csscontainer.innerHTML=customfilters()+gencss(words);
+csscontainer.innerHTML=`[data-subreddit]{display:block!important}`+customfilters()+gencss(words);
 document.body.appendChild(csscontainer);
 dbg2("idle, elements inserted:"+csscounter);
 dbg2(document.getElementById('redditcssfilter1').innerHTML.toString())
