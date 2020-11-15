@@ -7,13 +7,13 @@
 // @run-at     document-start
 // @grant unsafeWindow
 // ==/UserScript==
-
+//use https://github.com/JustOff/github-wc-polyfill instead
 
 function load(){
 /*Annoying stickies with trivial content*/
 var a=document.querySelectorAll(".js-sticky")
 for(var i=0;i<a.length;i++){a[i].removeAttribute('style')}
-/* Submit button glitches on older browsers*/
+/* Submit button glitches on older browsers(needs webcomponent polyfill)*/
 var b=document.getElementById("submit-file");
 if(b)b.removeAttribute('disabled');
 
