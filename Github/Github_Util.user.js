@@ -8,6 +8,7 @@
 // @grant unsafeWindow
 // ==/UserScript==
 //use https://github.com/JustOff/github-wc-polyfill instead
+//this script is fallback if polyfill breaks allowing file upload
 
 function load(){
 /*Annoying stickies with trivial content*/
