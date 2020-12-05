@@ -12,5 +12,6 @@ var a=document.querySelector('a.notification-indicator');
 if(a.getAttribute('aria-label').search("You have no unread notifications")==-1){
 document.title=Math.random()>0.5?"NEW NOTES":"";
 }
-}
+else{document.title="";}
 setInterval(check,1000);
+
