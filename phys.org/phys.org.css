@@ -1,7 +1,9 @@
 @namespace url(http://www.w3.org/1999/xhtml);
 
 @-moz-document domain("phys.org") {
-	div.timeline-badge,.navbar-brand{display: none!important;}
-	.container,.container >*,.timeline,.col-lg-10,.row.timeline-item,div.row,.col-12,.timeline >*{max-width:100%!important;width:100%!important;height: auto!important;;margin: 0!important;padding: 0!important;display:block!important;}
+	.align-items-center,.align-items-center *{display: inline!important;width:auto!important;height:auto!important;}
+	div.timeline-badge,.navbar-brand,.d-print-none,.header-button{display: none!important;}
+	p{max-width: 100vw!important;}
+	.container, .container-lg, .container-md, .container-sm, .container-xl,.container >*,.timeline,.col-lg-10,.row.timeline-item,div.row,.col-12,.timeline >*,.bg-white,.col-lg-6{background: none!important;max-width:100%!important;width:100%!important;height: auto!important;;margin: 0!important;padding: 0!important;display:block!important;}
 	
 }
