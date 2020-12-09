@@ -1,0 +1,7 @@
+@namespace url(http://www.w3.org/1999/xhtml);
+
+@-moz-document domain("phys.org") {
+.header-search {position:fixed!important;z-index:100!important;
+			top:0;right:0;			}
+	.header-search [name='search']{ background-color: black!important; ;display:block!important;border:0.25vw solid green}
+}
