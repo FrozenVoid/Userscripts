@@ -3,15 +3,15 @@
 // @namespace   slither
 // @description highlight food/prey by size
 // @include     http://slither.io/
-// @version     1
+// @version     1.01
 // @grant       unsafeWindow
 // @run-at document-start
 // ==/UserScript==
-var minfood=4;//minimal food size, hide below
+var minfood=2;//minimal food size, hide below
 
 function fsize(f){
 var r=(f/16)*(f>minfood);
-return r>3?3:r;}
+return r>1?1:r;}
 
 function hl(){
 if(!unsafeWindow.playing
