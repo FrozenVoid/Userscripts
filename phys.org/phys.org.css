@@ -3,6 +3,6 @@
 	div.timeline-badge,.navbar-brand,a[data-target='#subscribe'],.d-print-none,.header-button{display: none!important;}
 	.accent-figure__image ,.accent {background: none!important;height:auto!important;}
 	p{max-width: 100vw!important;}
-	.container, .container-lg,.col-lg-7,.col-lg-5, .col-lg-8,.col-5, .col-6, .container-fluid,.container-md, .container-sm, .container-xl,.container >*,.timeline,.col-lg-10,.row.timeline-item,div.row,.col-12,.timeline >*,.bg-white,.col-lg-6{background: none!important;max-width:100%!important;width:100%!important;height: auto!important;;margin: 0!important;padding: 0!important;display:block!important;}
+	.container, .container-lg,.col-lg-7,.col-xl-10 ,.col-lg-12,.col-lg-5, .col-lg-8,.col-5, .col-6, .container-fluid,.container-md, .container-sm, .container-xl,.container >*,.timeline,.col-lg-10,.row.timeline-item,div.row,.col-12,.timeline >*,.bg-white,.col-lg-6{background: none!important;max-width:100%!important;width:100%!important;height: auto!important;;margin: 0!important;padding: 0!important;display:block!important;}
 	
 }
