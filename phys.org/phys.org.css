@@ -1,0 +1,7 @@
+@namespace url(http://www.w3.org/1999/xhtml);
+
+@-moz-document domain("phys.org") {
+	div.timeline-badge,.navbar-brand{display: none!important;}
+	.container,.container >*,.timeline,.col-lg-10,.row.timeline-item,div.row,.col-12,.timeline >*{max-width:100%!important;width:100%!important;height: auto!important;;margin: 0!important;padding: 0!important;display:block!important;}
+	
+}
