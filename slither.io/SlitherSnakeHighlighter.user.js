@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name     SlitherSnakeHighlighter
-// @version  1.07d
+// @version  1.07e
 // @author FrozenVoid
 // @description Highlight snakes
 // @include   /^http.+slither.io.?$/
@@ -9,7 +9,7 @@
 
 const vecradius=22;// radius of eye vector
 const vec_distance=120;//distance from front of snake
-const vector_alpha=0.22;//alpha transparency of vector circle.
+const vector_alpha=0.22/6;//alpha transparency of vector circle.
 const hidesnakenames=0;//hides snake names
 const hidesnake_size=0;//hides sizes(added by default)
 const plaincolors=1;//use plain colors for snakes.
@@ -46,7 +46,7 @@ if(!unsafeWindow.snakes||unsafeWindow.snakes.length==1)return;
     setsnake('esp',0);
     setsnake('ec',oursnake_vector_color);
     setsnake('er',vecradius*2);
-    setsnake('eca',vector_alpha);
+    setsnake('eca',vector_alpha*6);
   // setsnake('cv',38);
 
        if(oursnakename_highlight){
@@ -62,12 +62,13 @@ if(plaincolors){ rbcs=null; cv=snake_plain_colors[id&7];}//plain color
 
     ed=vec_distance;esp=0;ec=ensnake_vector_color;er=5*(vecradius/sc);
       one_eye=0;eac=0;na=32.0;
+
       nk=hidesnakenames?sn_size:
 (nk.search("↔")!=-1?nk.replace(/ ↔ \d+|$/,sn_size):
  nk+sn_size);
        csw=ensnake_name_color;
-      eca=vector_alpha;
-      cs=cs04="#ffffff";marked=1;
+      eca=vector_alpha*sp;
+      cs=cs04="#ffffff";
 
     }
 
