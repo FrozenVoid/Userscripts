@@ -15,7 +15,7 @@
 
     }
 
-   document.addEventListener("keypress",evproc,false);
+   document.addEventListener("keypress",evproc);
 
 
 
