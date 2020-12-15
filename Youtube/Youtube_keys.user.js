@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Youtube_Keys
 // @namespace    YT
-// @version      1.01c
+// @version      1.01d
 // @description  F2 to next video.
 // @author       FrozenVoid
 // @match        https://www.youtube.com/watch?v*
@@ -15,7 +15,7 @@
 
     }
 
-   document.addEventListener("keypress",evproc);
+   window.addEventListener("keypress",evproc);
 
 
 
