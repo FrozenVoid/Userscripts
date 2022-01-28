@@ -14,4 +14,4 @@ var commentslink=document.querySelector('.titlebox')
 if(commentslink){
 var url=document.querySelector('h1.redditname>a.hover').href;
 if(url){
-commentslink.innerHTML=`<li><a class='sub-allcomments' href='${url}comments/'>[All Comments]</a></li>`+commentslink.innerHTM}}
+commentslink.innerHTML+=`<li><a class='sub-allcomments' href='${url}comments/'>[All Comments]</a></li>`}}
