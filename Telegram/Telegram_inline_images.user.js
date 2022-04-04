@@ -8,7 +8,8 @@
 // @run-at document-start
 // ==/UserScript==
 function setst(){
-var st=`main div{
+var st=`header{position:relative!important;}
+main div{
 		min-width:98vw!important;
 		margin:0!important;;padding:0!important;
 	border:2px solid red !important;
