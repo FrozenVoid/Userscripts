@@ -3,14 +3,16 @@
 // @namespace   Telegram
 // @description Inline_Telegram
 // @include     https://t.me/*
-// @version     1
+// @version     1.01
 // @grant       none
 // @run-at document-start
 // ==/UserScript==
+
 function setst(){
-var st=`header{position:relative!important;}
-main div{
+var st=`#widget_actions_wrap{display:none!important;};header{position:relative!important;}
+main div,html,main a,html>body,a.tgme_widget_message_video_player,iframe div,iframe body,.tgme_page_post{
 		min-width:98vw!important;
+		height:auto!important;
 		margin:0!important;;padding:0!important;
 	border:2px solid red !important;
 		;max-width:100%!important;}`;
@@ -29,7 +31,7 @@ for(var i=0;i<a.length;i++){
 var lnk=a[i].getAttribute('style');
 var lnk2=lnk.match(/url.*/)[0].replace("url('","").replace("')","").replace(/;.*/,"");
 
-a[i].parentNode.innerHTML=`<img width=100%  src="${lnk2}">`;
+a[i].parentNode.innerHTML=`<embed   width=100%  src="${lnk2}">`;
 a[i].setAttribute('loaded','full');
 
 }
@@ -45,7 +47,7 @@ for(var i=0;i<c.length;i++){
 var lnk=c[i].getAttribute('style');
 lnk=lnk.match(/url.*/)[0].replace("url('","").replace("')","");
 console.log(lnk);
-c[i].innerHTML=`<img width=100%  src="${lnk}">`;
+c[i].parentNode.innerHTML=`<embed     width=100%  src="${lnk}">`;
 c[i].setAttribute('loaded','full2');
 
 }
